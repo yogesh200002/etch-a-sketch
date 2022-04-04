@@ -12,8 +12,9 @@ let white = false;
 let drag = false;
 
 gridCreate(10)
+buttonTransform(black)
 
-function buttonTrasform(button){
+function buttonTransform(button){
     button.style.transform = 'scale(1.2)'
     button.style.backgroundColor = 'red'
 }
@@ -25,32 +26,30 @@ function buttonNormal(...buttons){
     })
 }
 
-reset.addEventListener('click',() => {
-    gridReset(grids)
-    update()
-    buttonTrasform(reset)
-    buttonNormal(eraser,buttonColor,black)
-})
-
 eraser.addEventListener('click', () => {
     white = true
     color = false
-    buttonTrasform(eraser)
-    buttonNormal(reset,buttonColor,black)
+    buttonTransform(eraser)
+    buttonNormal(buttonColor,black)
 })
 
 black.addEventListener('click', () => {
     white = false
     color = false
-    buttonTrasform(black)
-    buttonNormal(reset,buttonColor,eraser)
+    buttonTransform(black)
+    buttonNormal(buttonColor,eraser)
 })
 
 buttonColor.addEventListener('click', () => {
     white = false
     color = true
-    buttonTrasform(buttonColor)
-    buttonNormal(reset,black,eraser)
+    buttonTransform(buttonColor)
+    buttonNormal(black,eraser)
+})
+
+reset.addEventListener('click',() => {
+    gridReset(grids)
+    update()
 })
 
 function update(){
