@@ -1,32 +1,78 @@
 const container = document.querySelector(".container")
 const slider = document.querySelector('.slider')
+const gridValue = document.querySelector('.gridValue')
+const eraser = document.querySelector('.eraser')
+const reset = document.querySelector('.reset')
+const buttonColor = document.querySelector('.color')
+const black = document.querySelector('.black') 
+let grids;
+
 let color = false;
-gridCreate(1)
+let white = false;
+let drag = false;
+
+gridCreate(10)
+
+function buttonTrasform(button){
+    button.style.transform = 'scale(1.2)'
+    button.style.backgroundColor = 'red'
+}
+
+function buttonNormal(...buttons){
+    buttons.forEach(button => {
+        button.style.transform = 'scale(1)'
+        button.style.backgroundColor = 'black'
+    })
+}
+
+reset.addEventListener('click',() => {
+    gridReset(grids)
+    update()
+    buttonTrasform(reset)
+    buttonNormal(eraser,buttonColor,black)
+})
+
+eraser.addEventListener('click', () => {
+    white = true
+    color = false
+    buttonTrasform(eraser)
+    buttonNormal(reset,buttonColor,black)
+})
+
+black.addEventListener('click', () => {
+    white = false
+    color = false
+    buttonTrasform(black)
+    buttonNormal(reset,buttonColor,eraser)
+})
+
+buttonColor.addEventListener('click', () => {
+    white = false
+    color = true
+    buttonTrasform(buttonColor)
+    buttonNormal(reset,black,eraser)
+})
 
 function update(){
-    length = slider.value
-    gridReset(refGrid)
-    gridCreate(length)
-    console.log(length)
+    gridReset(grids)
+    gridCreate(slider.value)
+    gridValue.textContent = `${slider.value} X ${slider.value}`
 }
 
 slider.addEventListener('change',update)
 
 function mouseDrag(cells){
     cells.addEventListener('mousedown', e => {
-        color = true
+        drag = true
         colorChange(cells)
     })
-    cells.addEventListener('mousemove', e => {
-        if(color == true){
+    cells.addEventListener('mouseover', e => {
+        if(drag == true){
             colorChange(cells)
         }
     })
     cells.addEventListener('mouseup', e => {
-        if(color == true){
-            colorChange(cells)
-        }
-        color = false
+        drag = false
     })
 }
 
@@ -39,12 +85,11 @@ function gridReset(id){
 function gridCreate(gridLength){
     for(let i=0;i<gridLength*gridLength;i++){
         const grid = document.createElement('div')
-        grid.id = 'cell'
+        grid.classList.add('cell')
         container.style.gridTemplateColumns = `repeat(${gridLength},1fr)`
         container.appendChild(grid)  
     }
-    const grids = document.querySelectorAll('#cell')
-    refGrid = grids
+    grids = document.querySelectorAll('.cell')
     grids.forEach(cell => {
         mouseDrag(cell)
         cell.style.borderStyle = 'solid'
@@ -53,11 +98,16 @@ function gridCreate(gridLength){
 }
 
 function colorChange(element){
-    element.style.backgroundColor = 'black'
+    if(white == true){
+        element.style.backgroundColor = 'white'
+    }
+    else if(color == true){
+        let randomR = Math.floor(Math.random()*256)
+        let randomG = Math.floor(Math.random()*256)
+        let randomB = Math.floor(Math.random()*256)
+        element.style.backgroundColor = `rgb(${randomR},${randomG},${randomB})`
+    }
+    else{
+        element.style.backgroundColor = 'black'
+    }
 }
-
-container.style.display = 'grid'
-container.style.padding = '0px'
-container.style.height = '600px'
-container.style.width = '600px'
-container.style.borderStyle = 'solid'
