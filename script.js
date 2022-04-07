@@ -1,3 +1,4 @@
+//Initialising variables with selectors
 const container = document.querySelector(".container")
 const slider = document.querySelector('.slider')
 const gridValue = document.querySelector('.gridValue')
@@ -7,6 +8,7 @@ const buttonColor = document.querySelector('.color')
 const black = document.querySelector('.black') 
 let grids;
 
+//Setting up flags
 let color = false;
 let white = false;
 let drag = false;
@@ -52,6 +54,7 @@ reset.addEventListener('click',() => {
     update()
 })
 
+//Updating and reseting the grid while changing the slider
 function update(){
     gridReset(grids)
     gridCreate(slider.value)
@@ -60,6 +63,7 @@ function update(){
 
 slider.addEventListener('change',update)
 
+//Mouse Drag events
 function mouseDrag(cells){
     cells.addEventListener('mousedown', e => {
         drag = true
