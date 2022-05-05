@@ -3,10 +3,11 @@ body{
     display: flex;
     margin: 0;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
     background-color: aquamarine;
     font-family: 'Send Flowers', cursive;
     font-size: x-large;
+    overflow: hidden;
 }
 
 h1{
@@ -66,7 +67,10 @@ button:hover{
 footer{
     justify-content: center;
     display: flex;
-    margin-top: auto;
     font-size: x-large;
     font-weight: bold;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
