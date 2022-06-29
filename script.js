@@ -92,21 +92,6 @@ function mouseDrag(cells){
     })
 }
 
-function touchDrag(cells){
-    cells.addEventListener('touchstart', e => {
-        drag = true
-        colorChange(cells)
-    })
-    cells.addEventListener('touchmove', e => {
-        if(drag == true){
-            colorChange(cells)
-        }
-    })
-    cells.addEventListener('touchend', e => {
-        drag = false
-    })
-}
-
 function gridReset(id){
     id.forEach(value => {
         value.remove();
