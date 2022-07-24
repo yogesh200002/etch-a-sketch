@@ -108,7 +108,6 @@ function gridCreate(gridLength){
     grids = document.querySelectorAll('.cell')
     grids.forEach(cell => {
         mouseDrag(cell)
-        touchDrag(cell)
         cell.style.borderStyle = 'solid'
         cell.style.borderWidth = '1px'
     })
